@@ -1,0 +1,21 @@
+- name: Check disk space
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Check disk space on Linux
+      block:
+        - name: Get disk space information
+          command: df -hT
+          register: disk_space_info
+
+        - name: Parse disk space output
+          set_fact:
+            filesystem: "{{ disk_space_info.stdout_lines[0].split()[0] }}"
+            size_available: "{{ disk_space_info.stdout_lines[1].split()[1] | int }}"
+            size_total: "{{ disk_space_info.stdout_lines[1].split()[2] | int }}"
+    - name: Check disk space threshold
+      assert:
+        that: "{{ size_available | int }} > ({{ size_total | int }} * 0.2)"
+      register: disk_free
+

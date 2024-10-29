@@ -1,0 +1,15 @@
+---
+- name: Get hostname
+  hosts: "{{ hosts }}"
+  become: true
+  become_user: root
+
+  tasks:
+  - name: Get hostname
+    ansible.builtin.hostname:
+      name: "{{ ansible_hostname }}"
+    register: hostname
+
+  - name: Print hostname
+    debug:
+      var: hostname
