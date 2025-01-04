@@ -3,8 +3,21 @@
   become: true
 
   tasks:
+    - name: pre-check disk space
+      block:
+        - name: Get disk space information
+          command: df -Hl -t ext4
+          register: pre-check_disk_space
+
     - name: prune k3s crictl images
       block:
         - name: k3s crictl prune
           command: k3s crictl rmi -prune
           register: crictl_images_prune
+
+    - name: post-check disk space
+      block:
+        - name: Get disk space information
+          command: df -Hl -t ext4
+          register: post-check_disk_space
+
