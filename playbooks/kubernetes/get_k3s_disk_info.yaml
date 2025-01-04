@@ -6,7 +6,7 @@
     - name: Check disk space on Linux
       block:
         - name: Get disk space information
-          command: df -hT
+          command: df -Hl -t ext4
           register: disk_space_info
 
         - name: Parse disk space output
