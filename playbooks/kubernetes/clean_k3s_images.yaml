@@ -1,0 +1,10 @@
+- name: Clean k3s crictl stale images
+  hosts: k3s
+  become: true
+
+  tasks:
+    - name: prune k3s crictl images
+      block:
+        - name: k3s crictl prune
+          command: k3s crictl rmi -prune
+          register: crictl_images_prune
