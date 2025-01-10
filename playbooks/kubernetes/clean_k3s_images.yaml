@@ -1,6 +1,4 @@
 - name: Clean k3s crictl stale images
-  hosts: all
-
   tasks:
     - name: pre-check disk space
       block:
