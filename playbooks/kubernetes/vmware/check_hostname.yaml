@@ -1,6 +1,6 @@
-- name: Print out {{ inventory_hostname }} remote hostname
+- name: Print out remote hostname
   hosts:  "{{ ansible_limit | default('none') }}"
   gather_facts: yes
   tasks:
     - debug:
-        var: ansible_hostname
+        var: inventory_hostname
