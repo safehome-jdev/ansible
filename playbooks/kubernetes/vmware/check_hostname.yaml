@@ -1,5 +1,5 @@
 - name: Print out remote hostname
-  hosts:  {{ use_hostname }}
+  hosts:  "{{ use_hostname }}"
   gather_facts: yes
   tasks:
     - debug:
