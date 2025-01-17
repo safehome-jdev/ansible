@@ -1,6 +1,8 @@
 - name: Print out remote hostname
-  hosts:  "{{ use_hostname }}"
+  hosts: all
+  vars:
+    - hostname: "{{ config.name }}.kubernetes.lan"
   gather_facts: yes
   tasks:
     - debug:
-        var: use_hostname
+        var: hostname
