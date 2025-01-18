@@ -1,21 +1,28 @@
 - name: Clean k3s crictl stale images
   hosts: all
   tasks:
-    - name: pre-check disk space
+    - name: clean docker images
       block:
-        - name: Get disk space information
+        - name: Pre disk space information
           command: df -Hl -t ext4
-          register: pre-check_disk_space
+          register: pre_check_disk_space
 
-    - name: prune k3s crictl images
-      block:
+        - name: print pre-check
+          ansible.builtin.debug:
+            msg: pre_check_disk_space
+        
         - name: k3s crictl prune
           command: k3s crictl rmi -prune
-          register: crictl_images_prune
+          register: pre_check_disk_space
 
-    - name: post-check disk space
-      block:
-        - name: Get disk space information
+        - name: print result
+          ansible.builtin.debug:
+            msg: crictl_images_prune
+
+        - name: Post disk space information
           command: df -Hl -t ext4
-          register: post-check_disk_space
+          register: post_check_disk_space
 
+        - name: print post check
+          ansible.builtin.debug:
+            msg: post_check_disk_space
