@@ -1,7 +1,7 @@
 - name: Print out remote hostname
-  hosts: "{{ hostnames }}"
+  hosts: all
   vars:
-    - hostname: "{{ hostnames }}"
+    - hostname: "{{ config.name }}"
   gather_facts: yes
   tasks:
     - debug:
