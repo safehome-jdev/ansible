@@ -6,23 +6,23 @@
         - name: Pre disk space information
           command: df -Hl -t ext4
           register: pre_check_disk_space
-
-        - name: print pre-check
-          ansible.builtin.debug:
-            msg: pre_check_disk_space
         
         - name: k3s crictl prune
           command: k3s crictl rmi -prune
           register: pre_check_disk_space
 
-        - name: print result
-          ansible.builtin.debug:
-            msg: crictl_images_prune
-
         - name: Post disk space information
           command: df -Hl -t ext4
           register: post_check_disk_space
 
+        - name: print pre-check
+          ansible.builtin.debug:
+            msg: "{{ pre_check_disk_space }}"
+
+        - name: print result
+          ansible.builtin.debug:
+            msg: "{{ crictl_images_prune }}"
+
         - name: print post check
           ansible.builtin.debug:
-            msg: post_check_disk_space
+            msg: "{{ post_check_disk_space }}"
