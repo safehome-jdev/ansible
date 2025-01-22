@@ -1,0 +1,13 @@
+---
+- name: Install dnsutils package
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update the repository cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install dnsutils package
+      ansible.builtin.apt:
+        name: dnsutils
+        state: present
