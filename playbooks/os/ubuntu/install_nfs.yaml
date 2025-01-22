@@ -2,6 +2,10 @@
   hosts: all
   become: yes
   tasks:
+    - name: Update the repository cache
+      ansible.builtin.apt:
+        update_cache: yes
+
     - name: Install nfs-common
       ansible.builtin.apt:
         name: nfs-common
