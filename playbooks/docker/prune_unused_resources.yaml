@@ -1,17 +1,20 @@
 ---
-- name: Prune containers older than 24h
-  community.docker.docker_prune:
-    containers: true
-    containers_filters:
-      # only consider containers created more than 24 hours ago
-      until: 24h
-
-- name: Prune everything (including non-dangling images)
-  community.docker.docker_prune:
-    containers: true
-    images: true
-    images_filters:
-      dangling: false
-    networks: true
-    volumes: true
-    builder_cache: true
+- name: Clean k3s crictl stale images
+  hosts: all
+  tasks:
+    - name: Prune containers older than 24h
+      community.docker.docker_prune:
+        containers: true
+        containers_filters:
+          # only consider containers created more than 24 hours ago
+          until: 24h
+    
+    - name: Prune everything (including non-dangling images)
+      community.docker.docker_prune:
+        containers: true
+        images: true
+        images_filters:
+          dangling: false
+        networks: true
+        volumes: true
+        builder_cache: true
