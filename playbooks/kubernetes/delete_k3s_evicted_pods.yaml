@@ -1,0 +1,11 @@
+- name: remove k3s evicted pods
+  hosts: all
+  tasks:
+    - name: get evicted pods
+      block:
+        - name: get_evicted_pods
+          command: kubectl get pods --field-selector 'status.phase==Failed' --all-namespaces -o json
+          register: get_evicted_pods
+        - name: delete_evicted_pods
+          command: kubectl delete pods --field-selector 'status.phase==Failed' --all-namespaces -o json
+          register: delete_evicted_pods
