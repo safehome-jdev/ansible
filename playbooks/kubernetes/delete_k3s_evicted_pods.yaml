@@ -3,6 +3,15 @@
   tasks:
     - name: get evicted pods
       block:
+        - name: running_as
+          command: whoami
+          register: get_user
+        - name: user_id
+          command: id -u
+          register: get_user_id
+        - name: group_id
+          command: id -g
+          register: get_user_group_id
         - name: get_evicted_pods
           command: kubectl get pods --field-selector 'status.phase==Failed' --all-namespaces -o json
           register: get_evicted_pods
